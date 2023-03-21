@@ -3,6 +3,8 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\TransaksiController;
+use App\Http\Controllers\DetailTransaksiController;
 
 /*
 |--------------------------------------------------------------------------
@@ -37,3 +39,8 @@ Route::post('/categories/add', [CategoryController::class, 'store']);
 Route::put('categories/{id}', [CategoryController::class, 'update']);
 
 //transaksi
+Route::get('/transaksi/index', [TransaksiController::class, 'index'])->name('index_transaksi');
+Route::get('transaksi/cart', [TransaksiController::class, 'cart']);
+Route::get('transaksi/add/{id}', [TransaksiController::class, 'add'])->where('id','[0-9]+');
+Route::get('transaksi/hapus/{id}', [TransaksiController::class, 'hapus'])->where('id','[0-9]+');
+Route::get('/transaksi/create', [TransaksiController::class, 'tambah_transaksi']);

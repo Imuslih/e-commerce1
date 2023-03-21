@@ -41,7 +41,7 @@
                 <h5>Menu Transaksi</h5>
             </div>
             <div class="card-body">
-            <a href="#">
+            <a href="{{ route ("index_transaksi") }}">
                 <button class="btn btn-warning mt-2" type="button">Cek Keranjang Belanja</button>
             </a>
             </div>
