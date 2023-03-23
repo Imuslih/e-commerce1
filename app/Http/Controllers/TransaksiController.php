@@ -8,14 +8,32 @@ use Illuminate\Http\Request;
 
 class TransaksiController extends Controller
 {
+    public function detail(){
+        return view('/transaksi/detail');
+    }
+
     public function add($id){
         $cart = session('cart');
         $products = Product::find($id);
-        $cart[$id] = [
-            'nama_produk' => $products->name,
-            'harga_produk' => $products->price,
-            'qty' => 1
-        ];
+        if (empty($cart)){
+            $cart[$id] = [
+                'nama_produk' => $products->name,
+                'harga_produk' => $products->price,
+                'qty' => 1
+            ];
+        } else {
+            $jml=1;
+            foreach($cart as $item =>$val){
+                if($item==$id){
+                    $jml = $val['qty']+=1;
+                }
+            }
+            $cart[$id] = [
+                'nama_produk' => $products->name,
+                'harga_produk' => $products->price,
+                'qty' => $jml
+            ];
+        }
 
         session(['cart' => $cart]);
 
