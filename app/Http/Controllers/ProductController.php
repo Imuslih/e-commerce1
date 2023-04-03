@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Models\Category;
 use Illuminate\Http\Request;
 use App\Models\Product;
+use Illuminate\Support\Facades\Storage;
+use Illuminate\Validation\Rules\File;
 
 class ProductController extends Controller
 {
@@ -47,6 +49,7 @@ class ProductController extends Controller
             'deskripsi' => 'required',
             'harga_produk' => 'required|numeric',
             'id_kategori' => 'required',
+            'avatar' => [File::types(['jpeg', 'jpg', 'png'])->max(2 * 1024),]
         ]);
 
         Product::create([
@@ -54,10 +57,11 @@ class ProductController extends Controller
             'specification'=>$validated['spesifikasi'],
             'description'=>$validated['deskripsi'],
             'price'=>$validated['harga_produk'],
-            'category_id'=>$validated['id_kategori']
+            'category_id'=>$validated['id_kategori'],
+            'avatar' => Storage::putFile('products', $validated['avatar'])
         ]);
 
-        return redirect('/all');
+        return redirect('/products/index');
     }
 
     /**
@@ -102,17 +106,33 @@ class ProductController extends Controller
             'deskripsi' => 'required',
             'harga_produk' => 'required|numeric',
             'id_kategori' => 'required',
+            'avatar' => [File::types(['jpeg', 'jpg', 'png'])->max(2 * 1024),]
         ]);
 
-        Product::where('id', $id)->update([
-            'name'=>$validated['nama_produk'],
-            'specification'=>$validated['spesifikasi'],
-            'description'=>$validated['deskripsi'],
-            'price'=>$validated['harga_produk'],
-            'category_id'=>$validated['id_kategori']
-        ]);
+        // Product::where('id', $id)->update([
+        //     'name'=>$validated['nama_produk'],
+        //     'specification'=>$validated['spesifikasi'],
+        //     'description'=>$validated['deskripsi'],
+        //     'price'=>$validated['harga_produk'],
+        //     'category_id'=>$validated['id_kategori']
+        // ]);
 
-        return redirect('/all');
+        $produk = Product::find($id);
+        $produk->name = $validated['nama_produk'];
+        $produk->price = $validated['harga_produk'];
+        $produk->specification = $validated['spesifikasi'];
+        $produk->description = $validated['deskripsi'];
+        $produk->category_id = $validated['id_kategori'];
+
+        if($request->file('avatar')){
+            if($produk->avatar && Storage::exists($produk->avatar)){
+                Storage::delete($produk->avatar);
+            }
+            $produk->avatar = Storage::putFile('products', $validated['avatar']);
+        }
+        $produk->save();
+
+        return redirect('/products/index');
     }
 
     /**

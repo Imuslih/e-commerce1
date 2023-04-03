@@ -2,7 +2,7 @@
 
 @section('content')
     <div class="row pt-3">
-        <form action="/categories/{{ $categories->id }}" method="POST">
+        <form action="/categories/{{ $categories->id }}" method="POST" enctype="multipart/form-data">
             @method('PUT')
             @csrf
             <div class="form-group">
@@ -16,6 +16,15 @@
                 </div>
                 @enderror
             </div>
+
+            <div class="form-group mt-2">
+                <label for="avatar" class="form-label">Avatar</label>
+                <input type="file" class="form-control @error('avatar') is-invalid @enderror" id="avatar" name="avatar">
+                @error('avatar')
+                    <div id="avatarHelp" class="form-text">{{ $message }}</div>
+                @enderror
+            </div>
+
             <button type="submit" class="btn btn-primary mt-3" style="margin-bottom: 20px">Update</button>
             <a href="{{ url('/index') }}">
                 <button type="button" class="btn btn-danger mt-3" style="margin-bottom: 20px">Back</button>

@@ -4,16 +4,18 @@
     <a href="{{ url('/products/add') }}">
         <button class="btn btn-info mt-3" type="button" style="margin-bottom: 20px;">Tambah Produk</button>
     </a>
-    <a href="{{ url('/') }}">
-        <button class="btn btn-secondary mt-3" type="button" style="margin-bottom: 20px;">Beranda</button>
-    </a>
     <div class="row">
         @foreach ($products as $item)
-        <div class="col-sm-4">
+        <div class="col-sm-3">
             <div class="card text-center mb-3">
-                <div class="card-body" style="height:230px;">
+                <div class="card-body" style="height:auto;">
                     <h5>{{ $item->name }}</h5>
-                    <h6 class="card-subtitle mb-2 text-muted"><i>Category : {{ $item->category->name }}</i></h6>
+                    @if ($item->avatar)
+                    <img src="{{ asset('storage/'.$item->avatar) }}" class="img-fluid" style="width: 75%;" alt="">
+                    @else
+                    <img src="https://cdn-image.hipwee.com/wp-content/uploads/2021/12/hipwee-Recycle-Symbols-and-Patterns-Signs-Reduce-Reuse-Recycle_-RRR.png" class="img-fluid" style="width: 75%;" alt="">
+                    @endif
+                    <h6 class="card-subtitle my-2 text-muted"><i>Category : {{ $item->category->name }}</i></h6>
                     <h4>Rp. {{ number_format($item->price,0,',','.') }}</h4>
                     <a href="/products/{{ $item->id }}/edit">
                         <button class="btn btn-primary mt-3" type="button">Update</button>

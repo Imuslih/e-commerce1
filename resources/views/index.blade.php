@@ -16,7 +16,7 @@
             </div>
             <div class="card-body">
             <a href="{{ url ('/categories/index') }}">
-                <button class="btn btn-success mt-2" type="button">View Daftar Kategori</button>
+                <button class="btn btn-success mt-2" type="button">Daftar Kategori</button>
             </a>
             </div>
         </div>
@@ -28,14 +28,14 @@
                 <h5>Menu Produk</h5>
             </div>
             <div class="card-body">
-            <a href="{{ url('/all') }}">
-                <button class="btn btn-primary mt-2" type="button">View Daftar Produk</button>
+            <a href="{{ url('/products/index') }}">
+                <button class="btn btn-primary mt-2" type="button">Daftar Produk</button>
             </a>
             </div>
         </div>
     </div>
 
-    <div class="col-md-8" style="margin: 0 auto;">
+    {{-- <div class="col-md-8" style="margin: 0 auto;">
         <div class="card text-center">
             <div class="row mt-4">
                 <h5>Menu Transaksi</h5>
@@ -46,5 +46,5 @@
             </a>
             </div>
         </div>
-    </div>
+    </div> --}}
 @endsection
