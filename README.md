@@ -8,6 +8,8 @@
 <ul>
 <li>Buat Database</li>
 <li>Clone Repository</li>
+<li>Install Composer</li>
+<li>Jalankan php artisan key:generate</li>
 <li>setting file .env untuk mengkoneksikan database yang sudah dibuat</li>
 <li>Jalankan php artisan migrate</li>
 <li>jalankan php artisan serve</li>
